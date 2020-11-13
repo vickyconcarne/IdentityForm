@@ -66,6 +66,7 @@
      <Compile Include="Assets\AdVdGlyphRecognition\Scripts\Utility\CapStretchStrokeGraphic.cs" />
      <Compile Include="Assets\AdVdGlyphRecognition\Scripts\GlyphSet.cs" />
      <Compile Include="Assets\Real-Time Procedural Cable Simple\Scripts\CableProceduralStatic.cs" />
+     <Compile Include="Assets\Scripts\Misc\RotateConstantly.cs" />
      <Compile Include="Assets\Pixelation\Examples\PixelSize\PixelSizeOscillator.cs" />
      <Compile Include="Assets\Tween\Tween.cs" />
      <Compile Include="Assets\AdVdGlyphRecognition\Scripts\MatchingMethods\LegendreSeries.cs" />
@@ -92,7 +93,6 @@
      <Compile Include="Assets\Pixelation\Core\PixelationPost.cs" />
      <Compile Include="Assets\Pixelation\Examples\SimpleOscillator.cs" />
      <Compile Include="Assets\Pixelation\Core\SnapToMainCam.cs" />
-     <Compile Include="Assets\Scripts\Misc\RotateConstantly.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
