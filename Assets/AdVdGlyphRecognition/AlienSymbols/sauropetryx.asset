@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fbd0a9c775139144a24bc39d0629bab, type: 3}
+  m_Name: sauropetryx
+  m_EditorClassIdentifier: 
+  strokes:
+  - points:
+    - {x: 0.3579812, y: 0.58978873}
+    - {x: 0.39906102, y: 0.5487089}
+    - {x: 0.4460094, y: 0.5105634}
+    - {x: 0.4870892, y: 0.4753521}
+    - {x: 0.52816904, y: 0.43720657}
+    - {x: 0.5663145, y: 0.39906102}
+    - {x: 0.6015258, y: 0.3579812}

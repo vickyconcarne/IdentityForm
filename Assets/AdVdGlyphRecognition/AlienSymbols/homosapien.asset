@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fbd0a9c775139144a24bc39d0629bab, type: 3}
+  m_Name: homosapien
+  m_EditorClassIdentifier: 
+  strokes:
+  - points:
+    - {x: -0.53492874, y: 0.3884153}
+    - {x: -0.489446, y: 0.41660002}
+    - {x: -0.4464345, y: 0.45312458}
+    - {x: -0.40859663, y: 0.485557}
+    - {x: -0.38156962, y: 0.52609766}
+    - {x: -0.3491372, y: 0.5639355}
+    - {x: -0.3054308, y: 0.59976536}
+  - points:
+    - {x: -0.56898236, y: -0.40849203}
+    - {x: -0.5083651, y: -0.44833785}
+    - {x: -0.45361632, y: -0.487102}
+    - {x: -0.40496767, y: -0.5199976}
+    - {x: -0.35902175, y: -0.5443218}
+    - {x: -0.30357826, y: -0.5880282}

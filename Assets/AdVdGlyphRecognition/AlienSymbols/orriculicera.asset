@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3fbd0a9c775139144a24bc39d0629bab, type: 3}
+  m_Name: orriculicera
+  m_EditorClassIdentifier: 
+  strokes:
+  - points:
+    - {x: -0.5809859, y: -0.23767605}
+    - {x: -0.53403753, y: -0.2758216}
+    - {x: -0.49295774, y: -0.30809858}
+    - {x: -0.45187792, y: -0.34037557}
+    - {x: -0.41373238, y: -0.37558684}
+    - {x: -0.37558684, y: -0.4107981}
+    - {x: -0.33450705, y: -0.44307512}
+    - {x: -0.2963615, y: -0.49002346}
+    - {x: -0.26115024, y: -0.52816904}
+    - {x: -0.21713614, y: -0.57511735}
