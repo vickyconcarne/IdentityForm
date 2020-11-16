@@ -22,9 +22,9 @@ namespace AdVd.GlyphRecognition
         [Header("Sounds")]
         public AudioClip submitAnswer;
         public AudioClip correctSymbolSound;
-        public AudioClip incorrectAnswer;
+        public AudioClip incorrectSymbolSound;
         public AudioClip tellMeMoreSound;
-        public AudioClip nextAlien;
+        public AudioClip nextAlienSound;
 
         [Header("Animation")]
         public Animator alienSlideAnimator;
@@ -33,6 +33,10 @@ namespace AdVd.GlyphRecognition
         public GlyphSet alienSymbols;
         //Compile le glyphe et son index dans le glyphset en fonction de son nom, comme ça on peut ressortir les informations facilement (Item1 et Item2)
         public Dictionary<string, Tuple<int, Glyph>> glyphDictionary = new Dictionary<string, Tuple<int, Glyph>>();
+
+        //In game
+        public List<string> addedGlyphsInConvo = new List<string>();
+        public List<GameObject> addedGlyphsInGrid = new List<GameObject>();
 
         //Singleton
         public static GameLoopManager gameManagerInstance;
