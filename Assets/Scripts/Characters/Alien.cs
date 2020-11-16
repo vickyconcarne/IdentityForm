@@ -8,7 +8,7 @@ public class Alien : ScriptableObject
 {
     [Header("Meta information")]
     public string name;
-    public Sprite characterSprite;
+    public GameObject characterPrefab;
 
     public AudioClip talkSound;
     public AudioClip happySound;
@@ -22,6 +22,7 @@ public class Alien : ScriptableObject
 
     public string introductionDialogue;
     public List<string> additionalInformationDialogue;
+    public List<string> additionalQuestion;
 
     private int talkCost;
 
