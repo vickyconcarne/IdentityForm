@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 using UnityEngine;
 
 namespace AdVd.GlyphRecognition
@@ -35,8 +36,12 @@ namespace AdVd.GlyphRecognition
         public Dictionary<string, Tuple<int, Glyph>> glyphDictionary = new Dictionary<string, Tuple<int, Glyph>>();
 
         //In game
+        [Header("Added symbols in convo")]
         public List<string> addedGlyphsInConvo = new List<string>();
         public List<GameObject> addedGlyphsInGrid = new List<GameObject>();
+
+        public GameObject gridObject;
+        public GameObject symbolUIElement;
 
         //Singleton
         public static GameLoopManager gameManagerInstance;
@@ -75,6 +80,70 @@ namespace AdVd.GlyphRecognition
         {
 
         }
+
+        public void AddNewSymbolToLayout(Glyph g)
+        {
+            string glyphName = g.ToString();
+            int count = addedGlyphsInGrid.Count;
+            if (!addedGlyphsInConvo.Contains(glyphName))
+            {
+                GameObject tile = (GameObject)Instantiate(Resources.Load("UI/AddedSymbolPrefab"), gridObject.transform);
+                addedGlyphsInGrid.Add(tile);
+                addedGlyphsInConvo.Add(glyphName);
+                AddListenersToGridObject(tile, g);
+            }
+        }
+
+        /// <summary>
+        /// The value of c passed into the lambda is the value of c at the time the lambda is called (delegating at that point is like operating in a coroutine). 
+        /// Since count iterates from 0-maxCalue over the course of the foreach loop, by the time the click listener is triggered, it is already maxValue, and will always be maxValue. 
+        /// If we want to pass a different value into each lambda, we need to create a local value that captures the proper value of count for each iteration of the loop, hence changing
+        /// the scope by calling it in a separate method.
+        /// </summary>
+        /// <param name="tile"></param>
+        /// <param name="index"></param>
+        public void AddListenersToGridObject(GameObject tile, Glyph g)
+        {
+            //Glyph
+            GlyphDisplay gDisplay = tile.transform.GetChild(0).GetComponent<GlyphDisplay>();
+            gDisplay.glyph = g; 
+            //Button
+            Button b = tile.transform.GetChild(1).GetComponent<Button>();
+            b.onClick.AddListener(delegate { DeleteGridSymbol(tile); });
+        }
+
+        public void DeleteGridSymbol(GameObject tile)
+        {
+            int index = GetDictionaryIndex(tile);
+            int count = addedGlyphsInGrid.Count;
+            if (index < count)
+            {
+                Destroy(addedGlyphsInGrid[index]);
+                addedGlyphsInGrid.RemoveAt(index);
+                addedGlyphsInConvo.RemoveAt(index);
+            }
+        }
+
+        /// <summary>
+        /// We cant directly attach an index to the delegate functions, because the index of our dictionaries is subject to change if we 
+        /// delete a dictionary. (dictionaries that come after in the list will have their index re-updated). As such, we iterate through our
+        /// object list until we find the corresponding object, at which point we know what index theyre in.
+        /// </summary>
+        public int GetDictionaryIndex(GameObject tileObject)
+        {
+            for (int i = 0; i < addedGlyphsInGrid.Count; i++)
+            {
+                if (GameObject.ReferenceEquals(tileObject, addedGlyphsInGrid[i]))
+                {
+                    Debug.Log("Found object index is: " + i.ToString());
+                    return i;
+                }
+            }
+            //If we dont find, but this should never happen
+            Debug.LogError("Couldnt find such tile object in our dictionary list");
+            return 0;
+        }
+
 
         private IEnumerator ConversationCooldown()
         {

@@ -60,14 +60,15 @@ public class CCastDrawnGlyph : MonoBehaviour
         StopAllCoroutines();
         if (match != null)
         {
-            
-            m_SliderGlyphDisplay.GetComponent<GlyphDisplay>().glyph = GameLoopManager.gameManagerInstance.glyphDictionary[match.target.name].Item2;
+            Glyph foundGlyph = GameLoopManager.gameManagerInstance.glyphDictionary[match.target.name].Item2;
+            m_SliderGlyphDisplay.GetComponent<GlyphDisplay>().glyph = foundGlyph;
             m_SliderObject.GetComponent<Animator>().SetTrigger("ShowNotif");
             m_SliderText.text = "Added " + match.target.name;
             float alpha = 1f;
             Color newColor = m_MorphTargetGlyph.color;
             newColor.a = alpha;
             m_MorphTargetGlyph.color = newColor;
+            GameLoopManager.gameManagerInstance.AddNewSymbolToLayout(foundGlyph);
             StartCoroutine("FadeOut");
             /*if (m_Training)
             {
