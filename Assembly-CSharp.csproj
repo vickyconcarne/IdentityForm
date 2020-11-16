@@ -56,8 +56,10 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\AdVdGlyphRecognition\Scripts\GlyphDrawInput.cs" />
+     <Compile Include="Assets\Scripts\GameLoopManager.cs" />
      <Compile Include="Assets\Tween\Demo\TweenDemo.cs" />
      <Compile Include="Assets\Real-Time Procedural Cable Simple\Scripts\CableProceduralSimple.cs" />
+     <Compile Include="Assets\Scripts\Characters\Alien.cs" />
      <Compile Include="Assets\AdVdGlyphRecognition\Scripts\Utility\GlyphDrawer.cs" />
      <Compile Include="Assets\Pixelation\Readme.cs" />
      <Compile Include="Assets\AdVdGlyphRecognition\Scripts\MatchingMethods\SqrDistanceDTWMatchingMethod.cs" />
@@ -93,8 +95,6 @@
      <Compile Include="Assets\Pixelation\Core\PixelationPost.cs" />
      <Compile Include="Assets\Pixelation\Examples\SimpleOscillator.cs" />
      <Compile Include="Assets\Pixelation\Core\SnapToMainCam.cs" />
-     <Compile Include="Assets\Scripts\Glyph\LevelPlayer.cs" />
-     <Compile Include="Assets\Scripts\Characters\Alien.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
