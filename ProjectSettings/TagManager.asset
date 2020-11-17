@@ -38,6 +38,12 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Interface_Overlay
+    uniqueID: 3478984607
+    locked: 0
+  - name: Interface_normal
+    uniqueID: 2574151617
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
