@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using DigitalRuby.Tween;
 using UnityEngine;
 
 namespace AdVd.GlyphRecognition
@@ -14,6 +15,7 @@ namespace AdVd.GlyphRecognition
         public int minTime;
 
         [Header("Characters In Loop")]
+        public bool canInteract;
         public bool inConversation;
         public int currentDialogueCounter;
         public List<Alien> aliens;
@@ -21,6 +23,8 @@ namespace AdVd.GlyphRecognition
         private int alienCounter;
 
         [Header("Sounds")]
+        public AudioSource audioPlayer; 
+
         public AudioClip submitAnswer;
         public AudioClip correctSymbolSound;
         public AudioClip incorrectSymbolSound;
@@ -29,9 +33,11 @@ namespace AdVd.GlyphRecognition
 
         [Header("Animation")]
         public Animator alienSlideAnimator;
-        private float timeBeforeNextConversation;
+        private float timeBeforeNextConversation = 3f;
         [Header("glyphs")]
         public GlyphSet alienSymbols;
+        public Color correctSymbolColor;
+        public Color incorrectSymbolColor;
         //Compile le glyphe et son index dans le glyphset en fonction de son nom, comme ça on peut ressortir les informations facilement (Item1 et Item2)
         public Dictionary<string, Tuple<int, Glyph>> glyphDictionary = new Dictionary<string, Tuple<int, Glyph>>();
 
@@ -41,8 +47,10 @@ namespace AdVd.GlyphRecognition
         public List<GameObject> addedGlyphsInGrid = new List<GameObject>();
 
         public GameObject gridObject;
+        public GameObject resultObject;
         public GameObject symbolUIElement;
 
+        public List<GameObject> resultSymbols = new List<GameObject>();
         //Singleton
         public static GameLoopManager gameManagerInstance;
 
@@ -61,6 +69,7 @@ namespace AdVd.GlyphRecognition
             currentTime = maxTime;
             alienCounter = 0;
             inConversation = false;
+            canInteract = true;
             currentDialogueCounter = 0;
             int i = 0;
             foreach (Glyph g in alienSymbols)
@@ -83,15 +92,19 @@ namespace AdVd.GlyphRecognition
 
         public void AddNewSymbolToLayout(Glyph g)
         {
-            string glyphName = g.ToString();
-            int count = addedGlyphsInGrid.Count;
-            if (!addedGlyphsInConvo.Contains(glyphName))
+            if (canInteract)
             {
-                GameObject tile = (GameObject)Instantiate(Resources.Load("UI/AddedSymbolPrefab"), gridObject.transform);
-                addedGlyphsInGrid.Add(tile);
-                addedGlyphsInConvo.Add(glyphName);
-                AddListenersToGridObject(tile, g);
+                string glyphName = g.ToString();
+                int count = addedGlyphsInGrid.Count;
+                if (!addedGlyphsInConvo.Contains(glyphName) && count < 4)
+                {
+                    GameObject tile = (GameObject)Instantiate(Resources.Load("UI/AddedSymbolPrefab"), gridObject.transform);
+                    addedGlyphsInGrid.Add(tile);
+                    addedGlyphsInConvo.Add(glyphName);
+                    AddListenersToGridObject(tile, g);
+                }
             }
+            
         }
 
         /// <summary>
@@ -145,12 +158,77 @@ namespace AdVd.GlyphRecognition
         }
 
 
-        private IEnumerator ConversationCooldown()
+        public void ValidateSymbols()
         {
+            if (canInteract && inConversation)
+            {
+                StopAllCoroutines();
+                StartCoroutine("ConversationFinish");
+            }
+            
+        }
+
+        private IEnumerator ConversationFinish()
+        {
+            canInteract = false;
+            //Start analysis
+            audioPlayer.PlayOneShot(submitAnswer, 0.3f);
+            yield return new WaitForSeconds(1f);
+            Glyph currentGlyph;
+            Vector3 beginningScale = Vector3.one;
+            Vector3 endScale = beginningScale * 1.5f;
+            foreach (GameObject go in addedGlyphsInGrid)
+            {
+                audioPlayer.PlayOneShot(correctSymbolSound, 0.2f);
+                GlyphDisplay gDisplay = go.transform.GetChild(0).GetComponent<GlyphDisplay>();
+                currentGlyph = gDisplay.glyph;
+                Transform gDisplayTrans = go.transform.GetChild(0);
+                //TWEEN
+                System.Action<ITween<Vector3>> updateSize = (t) =>
+                {
+                    gDisplayTrans.localScale = t.CurrentValue;
+                };
+
+                // completion defaults to null if not passed in
+                gDisplayTrans.gameObject.Tween("scaleGo", gDisplayTrans.localScale, endScale, 0.4f, TweenScaleFunctions.QuadraticEaseOut, updateSize);
+                // change color
+                go.GetComponent<Image>().color = correctSymbolColor;
+                //Add symbol to result
+                GameObject superImposedSymbol = (GameObject)Instantiate(Resources.Load("UI/FinalDisplayElement"), resultObject.transform);
+                superImposedSymbol.transform.GetChild(0).GetComponent<GlyphDisplay>().glyph = currentGlyph;
+                resultSymbols.Add(superImposedSymbol);
+                //Revert back to previous scale
+                yield return new WaitForSeconds(0.1f);
+                gDisplayTrans.gameObject.Tween("scaleGo", gDisplayTrans.localScale, beginningScale, 0.4f, TweenScaleFunctions.QuadraticEaseOut, updateSize);
+
+                yield return new WaitForSeconds(0.8f);
+            }
+            //Start alien reaction
+
+            //Start alien departure
+
             yield return new WaitForSeconds(timeBeforeNextConversation);
+            foreach(GameObject gotodelete in addedGlyphsInGrid)
+            {
+                Destroy(gotodelete);
+            }
+            addedGlyphsInGrid.Clear();
+            addedGlyphsInConvo.Clear();
+            foreach(GameObject resultSymbolObject in resultSymbols)
+            {
+                Destroy(resultSymbolObject);
+            }
+            resultSymbols.Clear();
+
             inConversation = false;
+            canInteract = true;
             yield return null;
         }
+
+
+
+
+        //TUPLE CLASS DECLARATION
 
         public class Tuple<T, U>
         {
